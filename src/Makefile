@@ -5,7 +5,7 @@ include $(CURDIR)/../project.mk
 
 rwildcard               = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
-CXX_SRCMAIN             = 
+CXX_SRCMAIN             =
 CXX_SRCEXT              = main/dsp.cpp main/generic/generic.cpp
 CXX_SRCALL              = $(call rwildcard, main, *.cpp)
 CXX_SRCTEST             = $(call rwildcard, test, *.cpp)
@@ -131,7 +131,7 @@ $(ARTIFACT_OBJ): $(BUILD_DEPS) $(CXX_OBJ) $(CXX_OBJEXT)
 $(ARTIFACT_LIB): $(ARTIFACT_OBJ)
 	@echo "  $(CXX)  [$(ARTIFACT_NAME)] $(notdir $(ARTIFACT_LIB))"
 	@$(CXX) -o $(ARTIFACT_LIB) $(LINKER_OBJS) $(ARTIFACT_OBJ) $(SO_FLAGS) $(LINKER_DEPS)
-	
+
 $(ARTIFACT_STATICLIB): $(ARTIFACT_OBJ)
 	@echo "  $(AR)   [$(ARTIFACT_NAME)] $(notdir $(ARTIFACT_STATICLIB))"
 	@$(AR) rcs $(ARTIFACT_STATICLIB) $(LINKER_OBJS) $(ARTIFACT_OBJ)
@@ -155,7 +155,7 @@ $(ARTIFACT_PC):
 	@echo "Description: $($(ARTIFACT_VARS)_DESC)" >> "$(ARTIFACT_PC)"
 	@echo "Version: $($(ARTIFACT_VARS)_VERSION)" >> "$(ARTIFACT_PC)"
 	@echo "Cflags: -I\$${includedir}" >> "$(ARTIFACT_PC)"
-	@echo "Libs: -L\$${libdir} -l:$(notdir $(ARTIFACT_LIBLINK))" >> "$(ARTIFACT_PC)"
+	@echo "Libs: -L\$${libdir} -l$(notdir $($(ARTIFACT_VARS)_NAME))" >> "$(ARTIFACT_PC)"
 
 install: all
 	@echo "Installing $($(ARTIFACT_VARS)_NAME)"
